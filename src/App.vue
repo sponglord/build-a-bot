@@ -19,26 +19,29 @@
 <script>
 
 import RobotBuilder from './build/RobotBuilder.vue';
-//import availableParts from './data/parts';
 
 export default {
   name: 'app',
   components: {
     RobotBuilder,
   },
-  data(){
-      return {
-          //availableParts
-      };
-  }
 };
 </script>
 
+<!-- Global style
+As a general rule you should not have any global styles in any component other than your top level App component -->
 <style>
     body{
         background: linear-gradient(to bottom, #555, #999 );
         background-attachment: fixed;
     }
+</style>
+
+<!-- Scoped style.
+Scoping works by creating hash values that Vue adds as an attr to the element and then the css selector targets only
+those elements with that hash e.g. header[dat-v-fca0345]
+See points 15 - 17 in RobotBuilder.vue for further explanation of scoping-->
+<style scoped>
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
     }
