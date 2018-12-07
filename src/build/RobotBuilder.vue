@@ -120,7 +120,8 @@
 
         /**
          * Computed properties are like data, except instead of a specific value, they are a function.
-         * The function is called and then the component can use the value that is returned, like a normal property.
+         * The function acts like a GETTER and is called when the computed property is referenced.
+         * Then the component can use the value that is returned.
          * Computed properties can take various factors into account - for example, the selectedRobot computed property
          * is different depending on the values of the different selected[BodyPart]Index properties of the application.
          * Computed properties help you to move logic out of your template.
