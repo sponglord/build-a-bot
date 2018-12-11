@@ -1,7 +1,18 @@
 <template>
     <!-- The classes on this child comp will evaluate to "part" + whatever is passed for the position prop e.g. "top" -->
     <div class="part" :class="position">
-        <img :src="selectedPart.src" title="arm"/>
+        <!-- @click Re. Navigating to routes with code -->
+        <img :src="selectedPart.src" title="arm" @click="showPartInfo()"/>
+        <!-- Alternative 'router-link' syntax -->
+        <!--<router-link :to="{
+                    name : 'Parts',
+                    params : {
+                        id : this.selectedPart.id,
+                        partType : this.selectedPart.type
+                    }
+                }">
+            <img :src="selectedPart.src" title="arm" @click="showPartInfo()"/>
+        </router-link>-->
         <button @click="selectPreviousPart()" class="prev-selector"></button>
         <button @click="selectNextPart()" class="next-selector"></button>
         <span class="sale" v-show="selectedPart.onSale">Sale!</span>
@@ -92,6 +103,25 @@
                 );
 //                this.emitSelectedPart();
             },
+            /**
+             * Re. Navigating to routes with code
+             * Because we injected a router into our Vue instance in the main index.js file
+             * we now have a router available here on this.$router
+             */
+            showPartInfo(){
+
+                // e.g.1 - Pass in a route URL
+//                this.$router.push('/parts');
+
+                // e.g.2 - Use object syntax now we want to pass parameters
+                this.$router.push({
+                    name : 'Parts',
+                    params : {
+                        id : this.selectedPart.id,
+                        partType : this.selectedPart.type
+                    }
+                });
+            }
         },
     };
 </script>
@@ -122,6 +152,7 @@
     }
     .part img {
         width:165px;
+        cursor: pointer;
     }
     .top {
         border-bottom: none;

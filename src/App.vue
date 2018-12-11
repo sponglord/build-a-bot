@@ -4,28 +4,59 @@
             <nav>
                 <ul>
                     <li class="nav-item">
-                        <img class="logo" src="assets/build-a-bot-logo.png"/>
-                        Build-a-Bot
+                        <!-- <router-link to="/">-->
+                        <!-- Above works, but this is an alternative syntax with binding to one of the
+                         routes we declared in ./router/index.js -->
+                        <router-link :to="{name : 'Home'}" class="nav-link" exact>
+                            <img class="logo" src="assets/build-a-bot-logo.png"/>
+                            Build-a-Bot
+                        </router-link>
+                    </li>
+
+                    <!-- Re. Styling links based on the active route
+                    The 'exact' attr forces an exact match on the full url before Vue will apply the
+                    .router-link-active class (see styles, below)
+                    N.B. if you wish Vue to apply a class of a different name to style the active route link
+                    use the 'active-class attr in the router-link element e.g. <router-link active-class="foo" ... -->
+                    <li class="nav-item">
+                        <router-link :to="{name : 'Build'}" class="nav-link" exact>
+                            Build
+                        </router-link>
                     </li>
                 </ul>
             </nav>
         </header>
         <main>
-            <RobotBuilder/>
+            <!--<HomePage/>-->
+            <!--<RobotBuilder/>-->
+
+            <!-- 2. Display component that matches our current route -->
+            <router-view/>
         </main>
     </div>
 </template>
 
 <script>
+    /**
+     * RE. Chapter 5 - Routing
+     * 1. Without routing the only way to see HomePage or RobotBuilder is to comment the components & their imports in & out
+     * Most modern frameworks however provide a way to navigate between pages within your SPA by changing the URL
+     * or clicking on links
+     */
+//    import HomePage from './home/HomePage.vue'
+//    import RobotBuilder from './build/RobotBuilder.vue';
+    /**
+     * 3. Once routing is in place we don't need the imports, above
+     * NOR do we need to declare our components, below
+     */
 
-import RobotBuilder from './build/RobotBuilder.vue';
-
-export default {
-  name: 'app',
-  components: {
-    RobotBuilder,
-  },
-};
+    export default {
+        name: 'app',
+//        components: {
+////            HomePage,
+//            RobotBuilder,
+//        },
+    };
 </script>
 
 <!-- Global style
@@ -57,6 +88,10 @@ See points 15 - 17 in RobotBuilder.vue for further explanation of scoping-->
         width: 1084px;
         margin: 0 auto;
     }
+    .logo {
+        vertical-align: middle;
+        height: 30px;
+    }
     ul {
         padding: 3px;
         display: flex;
@@ -67,8 +102,12 @@ See points 15 - 17 in RobotBuilder.vue for further explanation of scoping-->
         font-size: 22px;
         border-right: 1px solid #bbb;
     }
-    .logo {
-        vertical-align: middle;
-        height: 30px;
+    .nav-link{
+        text-decoration: none;
+        color: inherit;/* Avoids changing color of the link */
+    }
+    /* A special class used by Vue that gets applied to any links that match the current route */
+    .router-link-active{
+       color: white;
     }
 </style>

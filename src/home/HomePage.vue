@@ -5,7 +5,10 @@
             <img class="robot" src="assets/robot-home.png" aria-hidden="true"/>
         </div>
         <div class="get-started">
-            <a href="">Get started</a> building your first robot!
+            <!--<a href="">Get started</a> building your first robot!-->
+
+            <!-- Link to one of our routes (as defined in ./router/index.js -->
+            <router-link to="/build">Get started</router-link> building your first robot!
         </div>
     </div>
 </template>
