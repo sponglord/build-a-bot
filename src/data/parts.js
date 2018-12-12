@@ -115,7 +115,7 @@ const parts = {
             cost: 1385
         },
         {
-            id: 2,
+            id: 3,
             description: 'A simple torso with a pouch for carrying items.',
             title: 'Gauged',
             src: resolve( images('./torso-pouch.png') ),

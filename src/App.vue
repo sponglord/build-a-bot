@@ -26,13 +26,24 @@
                 </ul>
             </nav>
         </header>
-        <main>
-            <!--<HomePage/>-->
-            <!--<RobotBuilder/>-->
 
-            <!-- 2. Display component that matches our current route -->
-            <router-view/>
-        </main>
+        <!-- Re. Using Named Views: Display different content for different parts of the same page
+        Named views are like sibling routes - multiple router-views on a single component
+        The route for the component specifies which views to display -->
+        <div class="container">
+            <aside class="aside">
+                <router-view name="sidebar"/>
+            </aside>
+            <main>
+                <!--<HomePage/>-->
+                <!--<RobotBuilder/>-->
+
+                <!-- 2. Display the component that matches our current route
+                A router-link points to a route object (as declared in router/index.js)
+                This route object specifies which component(s) to place in which router-view(s) on the page -->
+                <router-view/><!-- Re. Named Views - if a name attr is not specified it defaults to "default" -->
+            </main>
+        </div>
     </div>
 </template>
 
@@ -76,16 +87,27 @@ See points 15 - 17 in RobotBuilder.vue for further explanation of scoping-->
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
     }
+    .container{
+        display: flex;
+        margin: 10px auto;
+        justify-content: center;
+    }
+    .aside{
+        padding: 30px;
+        background-color: #aaa;
+        width: 100px;
+        min-height: 300px;
+    }
     main{
-        margin: 0 auto;
+        /*margin: 0 auto;*/
         padding: 30px;
         background-color: white;
-        width: 1024px;
+        width: 964px;/* 1024px */
         min-height: 300px;
     }
     header {
         background-color: #999;
-        width: 1084px;
+        width: 1184px;
         margin: 0 auto;
     }
     .logo {
