@@ -27,7 +27,7 @@
             </nav>
         </header>
 
-        <!-- Re. Using Named Views: Display different content for different parts of the same page
+        <!-- Re. 5_9: Using Named Views: Display different content for different parts of the same page
         Named views are like sibling routes - multiple router-views on a single component
         The route for the component specifies which views to display -->
         <div class="container">
@@ -41,7 +41,7 @@
                 <!-- 2. Display the component that matches our current route
                 A router-link points to a route object (as declared in router/index.js)
                 This route object specifies which component(s) to place in which router-view(s) on the page -->
-                <router-view/><!-- Re. Named Views - if a name attr is not specified it defaults to "default" -->
+                <router-view/><!-- Re. 5_9: Using Named Views - if a name attr is not specified it defaults to "default" -->
             </main>
         </div>
     </div>

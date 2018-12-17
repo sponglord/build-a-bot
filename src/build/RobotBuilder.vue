@@ -90,6 +90,32 @@
 
     export default {
         name : 'RobotBuilder',
+        /**
+         * Re. 5_12: Preventing Navigation Away from Pages with Navigation Guards
+         * N.B. This is an example of adding a route guard to a component
+         *
+         * @param to - the route being navigated to
+         * @param from - the route being navigated to
+         * @param next - a function to call to allow or block navigation
+         */
+        beforeRouteLeave(to, from, next){
+
+            // Warn the user if they try to leave the page without adding the robot to the cart first
+
+            if(this.addedToCart){
+                next(true);
+
+            }else{
+
+                /**
+                 * The Window.confirm() method displays a modal dialog with an optional message and two buttons, OK and Cancel.
+                 * (and apparently has been around for ages)
+                 */
+                const response = confirm('You have not added the robot to the cart. Are you sure you want to leave?');
+
+                next(response);
+            }
+        },
         components: {
             PartSelector,
             CollabsibleSection,
@@ -107,6 +133,7 @@
         data(){
             return {
                 availableParts,
+                addedToCart : false,// Re. 5_12: Preventing Navigation Away from Pages...
                 cart : [],
                 selectedRobot: {
                     head : {},
@@ -162,6 +189,8 @@
                 // is not the same instance as is in the selectedRobot property.
                 // This prevents inadvertant pointers to the same object, in your code
                 this.cart.push( Object.assign({}, robot, {cost}) );// Create a new robot object with a cost property
+
+                this.addedToCart = true;// Re. 5_12: Preventing Navigation Away from Pages...
             }
         }
     }

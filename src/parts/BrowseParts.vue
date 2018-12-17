@@ -16,7 +16,7 @@
                 <router-link :to="{name: 'BrowseBases'}">Bases</router-link>
             </li>
         </ul>
-        <!-- Re. Nested Routes
+        <!-- Re. 5_8: Using Nested Routes
         1. Add a second router-view (we already have one in our App Component)
         This second view will allow us to add the routes above for the individual 'browse parts' pages-->
         <router-view></router-view>
