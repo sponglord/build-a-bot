@@ -21,6 +21,9 @@ import RobotBases from '../parts/RobotBases.vue';
 import SidebarStandard from '../sidebars/SidebarStandard.vue';
 import SidebarBuild from '../sidebars/SidebarBuild.vue';
 
+// Re. chap 6 - Managing State & Server Communication with Vuex
+import ShoppingCart from '../cart/ShoppingCart.vue'
+
 /**
  * Tell Vue to use the router
  */
@@ -176,5 +179,14 @@ export default new Router({
                 }
             }
         },
+
+        /**
+         * Re. chap 6 - Managing State & Server Communication with Vuex
+         */
+        {
+            path : '/cart',
+            name : 'Cart',
+            component : ShoppingCart
+        }
     ],
 });

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="parts">
         <h1>{{ part.title }}</h1>
         <div >
             {{part.description}}
@@ -8,10 +8,16 @@
 </template>
 
 <script>
-    import parts from '../data/parts';
+//    import parts from '../data/parts';
+import getPartsMixin from './get-parts-mixin';
 
     export default {
         name : 'PartInfo',
+
+        /**
+         * Re. 6_6 Using Actions to Work with APIs...
+         */
+        mixins: [getPartsMixin],
 
         /**
          * Hard coded data
@@ -70,7 +76,12 @@
                  * - find relevant array e.g. heads and then find which element in the array has a matching id
                  * This will return the whole parts object with title, description, cost etc
                  */
-                return parts[partType].find( part => part.id === +id);// N.B. shorthand '+' to cast id to Number
+//                return parts[partType].find( part => part.id === +id);// N.B. shorthand '+' to cast id to Number
+
+                /**
+                 * Re. 6_6 Using Actions to Work with APIs...
+                 */
+                return this.parts[partType].find( part => part.id === +id);// N.B. shorthand '+' to cast id to Number
             }
         }
     };

@@ -1,5 +1,13 @@
 <template>
-    <div class="content">
+    <!-- Re. 6_6 Using Actions to Work with APIs...
+
+    We use the v-if to stop Vue from trying to render the template before the 'created' lifecycle hook
+    has fired to make a call to the Vuex store's async action 'getParts'
+
+    This is necessary because on startup the component's computed property 'availableParts' will access the
+    $store's default value for 'parts' ($store.state.parts) which is null and so the template will try to render
+    it's <PartSelector> components with null data -->
+    <div v-if="availableParts" class="content">
 
         <div class="preview">
             <!-- Re. Injecting content into a child component with slots
@@ -63,6 +71,8 @@
                 @partSelected="part => selectedRobot.base=part"
             />
         </div>
+        <!--
+        No longer needed from Chap 6 - we now have a ShoppingCart.vue
         <div>
             <h1>Cart</h1>
             <table>
@@ -77,12 +87,12 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div>-->
     </div>
 </template>
 
 <script>
-    import availableParts from '../data/parts';
+//    import availableParts from '../data/parts';
     import PartSelector from './PartSelector.vue';
     import CollabsibleSection from '../shared/CollabsibleSection.vue';
 
@@ -122,6 +132,12 @@
         },
         created(){
             console.log('component created');
+            /**
+             * Re. 6_6 Using Actions to Work with APIs...
+             *
+             * Access the Vuex action 'getParts' via the built in 'dispatch' fn - to call the API to retrieve the list of parts
+             */
+            this.$store.dispatch('getParts');
         },
 
         mixins:[mountedHookMixin],
@@ -132,7 +148,7 @@
          */
         data(){
             return {
-                availableParts,
+//                availableParts,
                 addedToCart : false,// Re. 5_12: Preventing Navigation Away from Pages...
                 cart : [],
                 selectedRobot: {
@@ -154,6 +170,16 @@
          * Computed properties help you to move logic out of your template.
          */
         computed: {
+
+            /**
+             * Re. 6_6 Using Actions to Work with APIs...
+             *
+             * This computed property will get updated once the created call has made the Vuex store perform it's 'getParts' action
+             */
+            availableParts(){
+                return this.$store.state.parts;
+            },
+
 
             // re. 19. (Conditional styling - making style binding to computed property)
             headBorderStyle(){
@@ -188,7 +214,15 @@
                 // N.B. Good practice to enforce immutability - use Object.assign to ensure that the robot in the array
                 // is not the same instance as is in the selectedRobot property.
                 // This prevents inadvertant pointers to the same object, in your code
-                this.cart.push( Object.assign({}, robot, {cost}) );// Create a new robot object with a cost property
+//                this.cart.push( Object.assign({}, robot, {cost}) );// Create a new robot object with a cost property
+
+                /**
+                 * Re. chap 6 - Managing State & Server Communication with Vuex
+                 * Access our vuex store with this.$store
+                 * Then use the built in commit function - passing it the name of a mutation from our store
+                 * and the data we want to pass to that mutations
+                 */
+                this.$store.commit( 'addRobotToCart', Object.assign({}, robot, {cost}) );
 
                 this.addedToCart = true;// Re. 5_12: Preventing Navigation Away from Pages...
             }
@@ -303,6 +337,8 @@
         padding: 3px;
         font-size: 16px;
     }
+    /*
+    No longer needed from Chap 6 - we now have a ShoppingCart.vue
     td, th {
         text-align: left;
         padding: 5px;
@@ -310,7 +346,7 @@
     }
     .cost {
         text-align: right;
-    }
+    }*/
     .sale-border{
         border: 3px solid red;
     }

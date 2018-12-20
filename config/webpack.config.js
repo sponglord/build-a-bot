@@ -83,6 +83,21 @@ module.exports = {
         /*historyApiFallback: {
           index: 'start.html'
         },*/
+
+        /**
+         * Re. chap 6 - Managing State & Server Communication with Vuex
+         *
+         * Re. 6_6 - Using Actions to Work with APIs...
+         *
+         * Vue allows us to configure a built Proxy so we can proxy our api (running on localhost:8081 - see built-a-bot-server dir)
+         * through the Webpack Dev server that Vue is being served from
+         */
+        proxy : {
+            '/api' : {
+                target : 'http://localhost:8081',
+                changeOrigin : true,
+            }
+        }
     },
     plugins: [
         new webpack.NamedModulesPlugin(),
