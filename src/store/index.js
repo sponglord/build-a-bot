@@ -91,7 +91,42 @@ export default new Vuex.Store({
 
                 })// Use the destructured 'commit' to access the mutation 'updateParts'
                 .catch(console.error);
+        },
+
+        /**
+         * Re. 6_7 Using Actions to Save Data to an API
+         */
+        addRobotToCart({commit, state}, robot){
+
+            /**
+             * The API expects a fully populated cart object...
+             * ..so get current cart fromm state, append this robot and pass to API
+             */
+            const cart = [...state.cart, robot];// Spread existing cart (adds all items) to our new array PLUS add new robot
+            /**
+             * re. above
+             * "The spread operator can also (non-destructively) turn the contents of its operand into Array elements"
+             * - re. http://exploringjs.com/es6/ch_core-features.html#sec_from-apply-to-spread
+             */
+
+            return axios.post('/api/cart', cart)
+                .then( (result) => {
+
+                    /**
+                     * Update local Vuex state to also include the new robot AFTER post to API has succeeded
+                     *
+                     * Call our mutation
+                     */
+                    commit('addRobotToCart', robot);
+
+                    if(window.console && window.console.log){
+                        window.console.log('### index::THEN FROM ACTION:: result=',result);
+                    }
+
+                    return 'data from Action\'s "then"';
+                });
         }
+
     },
 
     /**

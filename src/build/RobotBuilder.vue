@@ -222,7 +222,31 @@
                  * Then use the built in commit function - passing it the name of a mutation from our store
                  * and the data we want to pass to that mutations
                  */
-                this.$store.commit( 'addRobotToCart', Object.assign({}, robot, {cost}) );
+//                this.$store.commit( 'addRobotToCart', Object.assign({}, robot, {cost}) );
+
+                /**
+                 * Re. 6_7 Using Actions to Save Data to an API
+                 *
+                 * Now we use a Vuex action - instead of the above mutation
+                 */
+                this.$store.dispatch('addRobotToCart', Object.assign({}, robot, {cost}))
+                    .then( (res) => {
+                        /**
+                         * Re. 6_7 Returning Promises from Actions
+                         *
+                         * After our action has posted to the API - navigate our App to the Cart page
+                         *
+                         * GENERAL NOTE RE. PROMISES
+                         * The dispatch action is returning a Promise (from axios.post) that itself has a .then method.
+                         * That .then gets called first and this .then receives whatever data that .then returns
+                         */
+
+                        if(window.console && window.console.log){
+                            window.console.log('### RobotBuilder:: THEN FROM DISPATCH:: res=',res);
+                        }
+                        
+                        this.$router.push('/cart');
+                    });
 
                 this.addedToCart = true;// Re. 5_12: Preventing Navigation Away from Pages...
             }
