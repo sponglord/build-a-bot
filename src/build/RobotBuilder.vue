@@ -98,6 +98,11 @@
 
     import mountedHookMixin from './mounted-hook-mixin';
 
+    /**
+     * Re. 6_15 Using the Vuex MapActions Helper
+     */
+    import {mapActions} from 'vuex';
+
     export default {
         name : 'RobotBuilder',
         /**
@@ -143,7 +148,15 @@
              * Re. 6_10 Namespacing Modules
              * Now we are namespacing our modules we need to include the modules name in any call to Actions, Mutations or Getters
              */
-            this.$store.dispatch('robots/getParts');
+//            this.$store.dispatch('robots/getParts');
+
+            /**
+             * Re. 6_15 Using the Vuex MapActions Helper
+             *
+             * We have now mapped the robots/getParts action to a local getParts method with the mapActions helper - which takes
+             * care of calling the dispatch method for us: so now we can just call our local method
+             */
+            this.getParts();
         },
 
         mixins:[mountedHookMixin],
@@ -215,6 +228,20 @@
          */
         methods: {
 
+            /**
+             * Re. 6_15 Using the Vuex MapActions Helper
+             *
+             * This creates methods on our component called getParts & addRobotToCart
+             */
+            ...mapActions('robots', ['getParts', 'addRobotToCart']),
+
+            /**
+             * Re. 6_16 Using the Vuex MapMutations Helper
+             *
+             * This works exactly the same as the MapActions helper - you map mutations to methods on the component
+             */
+//            ...mapMutations('robots', ['mutationMethod']),
+
             addToCart(){
                 const robot = this.selectedRobot;
                 const cost = robot.head.cost +
@@ -247,7 +274,32 @@
                  * Re. 6_10 Namespacing Modules
                  * Now we are namespacing our modules we need to include the modules name in any call to Actions, Mutations or Getters
                  */
-                this.$store.dispatch('robots/addRobotToCart', Object.assign({}, robot, {cost}))
+//                this.$store.dispatch('robots/addRobotToCart', Object.assign({}, robot, {cost}))
+//                    .then( (res) => {
+//                        /**
+//                         * Re. 6_7 Returning Promises from Actions
+//                         *
+//                         * After our action has posted to the API - navigate our App to the Cart page
+//                         *
+//                         * GENERAL NOTE RE. PROMISES
+//                         * The dispatch action is returning a Promise (from axios.post) that itself has a .then method.
+//                         * That .then gets called first and this .then receives whatever data that .then returns
+//                         */
+//
+//                        if(window.console && window.console.log){
+//                            window.console.log('### RobotBuilder:: THEN FROM DISPATCH:: res=',res);
+//                        }
+//
+//                        this.$router.push('/cart');
+//                    });
+
+                /**
+                 * Re. 6_15 Using the Vuex MapActions Helper
+                 *
+                 * We have now mapped the robots/addRobotToCart action to a local addRobotToCart method with the mapActions helper - which takes
+                 * care of calling the dispatch method for us: so now we can just call our local method
+                 */
+                this.addRobotToCart(Object.assign({}, robot, {cost}))
                     .then( (res) => {
                         /**
                          * Re. 6_7 Returning Promises from Actions
@@ -262,7 +314,7 @@
                         if(window.console && window.console.log){
                             window.console.log('### RobotBuilder:: THEN FROM DISPATCH:: res=',res);
                         }
-                        
+
                         this.$router.push('/cart');
                     });
 

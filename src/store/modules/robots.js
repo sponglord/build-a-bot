@@ -39,6 +39,7 @@ export default {
          */
         cart: [],
         parts : null,
+        foo : 'robotsFoo'
     },
 
     /**
@@ -169,7 +170,7 @@ export default {
          * @returns {string}
          */
         foo(state, getters, rootState){
-            return '';
+            return 'robots/getters foo';
         }
     }
 }

@@ -71,12 +71,38 @@
      * NOR do we need to declare our components, below
      */
 
+
+    /**
+     * Re. 6_13 Using the Vuex MapState Helper
+     * & Re. 6_14 Using the Vuex MapGetters Helper
+     */
+    import {mapState, mapGetters} from 'vuex';
+
     export default {
         name: 'app',
 //        components: {
 ////            HomePage,
 //            RobotBuilder,
 //        },
+
+        /**
+         * Re. 6_13 Using the Vuex MapState Helper
+         */
+        created(){
+            if(window.console && window.console.log){
+                window.console.log('### App::created:: this.rootFoo=',this.rootFoo);
+                window.console.log('### App::created:: this.robotsFoo=',this.robotsFoo);
+                window.console.log('### App::created:: this.usersFoo=',this.usersFoo);
+            }
+
+            /**
+             * Re. 6_14 Using the Vuex MapGetters Helper
+             */
+            if(window.console && window.console.log){
+                window.console.log('### App::created:: rootGetterFoo=',this.rootGetterFoo);
+                window.console.log('### App::created:: robotsGetterFoo=',this.robotsGetterFoo);
+            }
+        },
 
         /**
          * Re. chap 6 - Managing State & Server Communication with Vuex
@@ -91,7 +117,56 @@
                  * Access our newly created 'robots' module
                  */
                 return this.$store.state.robots.cart;
-            }
+            },
+
+            /**
+             * Re. 6_13 Using the Vuex MapState Helper
+             *
+             * The computed properties below work to extract properties from State
+             * - but the syntax can be improved with the MapState helper
+             */
+//            rootFoo(){
+//                return this.$store.state.foo;
+//            },
+//            robotsFoo(){
+//                return this.$store.state.robots.foo;
+//            },
+//            usersFoo(){
+//                return this.$store.state.users.foo;
+//            },
+            /**
+             * Spread the results of calling the mapState function into an array of Strings
+             * i.e "take the foo property off of the root state and provide it as a computed property with the same name
+             */
+//            ...mapState(['foo'])
+            /**
+             * But if you want to give the computed property a different name e.g. like rootFoo - you need to use the object syntax
+             */
+//            ...mapState( { rootFoo : 'foo'} )
+            /**
+             * But if you (also) want to pull a property from a namespaced state i.e. because you are using a module - you need to use a function
+             */
+            ...mapState( { rootFoo : 'foo',
+//                robotsFoo : state =>  state.robots.foo,
+                usersFoo : state =>  state.users.foo,
+            } ),
+            /**
+             * Alternative syntax - but only for NAMESPACED modules
+             * - pass in name of module, then an object detailing the property and what you want to rename it to
+             */
+            ...mapState('robots', {robotsFoo : 'foo'}),
+
+            /**
+             * Re. 6_14 Using the Vuex MapGetters Helper
+             */
+//            rootGetterFoo(){
+//                return this.$store.getters.foo;
+//            },
+//            robotsGetterFoo(){
+//                return this.$store.getters['robots/foo'];
+//            },
+            ...mapGetters({rootGetterFoo: 'foo'}),
+            ...mapGetters('robots', {robotsGetterFoo: 'foo'})
         }
     };
 </script>

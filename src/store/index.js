@@ -21,9 +21,9 @@ Vue.use(Vuex);
  */
 export default new Vuex.Store({
 
-//    state:{
-//        foo: 'rootFoo'
-//    },
+    state:{
+        foo: 'rootFoo'
+    },
 
     /**
      * Re. 6_9 Organising the Store with Modules
@@ -33,6 +33,7 @@ export default new Vuex.Store({
         users: usersModule,
     },
 
+
     /**
      * Re. 6_10 Namespacing Modules
      *
@@ -40,9 +41,12 @@ export default new Vuex.Store({
      */
 
 
-//    getters:{
-//        foo(state){
-//            return '';
-//        }
-//    }
+    /**
+     * Re. 6_14 Using the Vuex MapGetters Helper
+     */
+    getters:{
+        foo(state){
+            return 'root/getters foo';
+        }
+    }
 });
