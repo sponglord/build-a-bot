@@ -3,7 +3,14 @@
  */
 export default {
     created(){
-        this.$store.dispatch('getParts');
+
+//        this.$store.dispatch('getParts');
+
+        /**
+         * Re. 6_10 Namespacing Modules
+         * Now we are namespacing our modules we need to include the modules name in any call to Actions, Mutations or Getters
+         */
+        this.$store.dispatch('robots/getParts');
     },
     computed:{
         parts(){
@@ -17,7 +24,14 @@ export default {
                 bases  : [],
             }
 
-            return this.$store.state.parts || defaultObj;
+//            return this.$store.state.parts || defaultObj;
+
+            /**
+             * Re. 6_9 Organising the Store with Modules
+             *
+             * Access our newly created 'robots' module
+             */
+            return this.$store.state.robots.parts || defaultObj;
         }
     }
 }

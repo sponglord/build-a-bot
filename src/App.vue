@@ -83,7 +83,14 @@
          */
         computed: {
             cart(){
-                return this.$store.state.cart;
+//                return this.$store.state.cart;
+
+                /**
+                 * Re. 6_9 Organising the Store with Modules
+                 *
+                 * Access our newly created 'robots' module
+                 */
+                return this.$store.state.robots.cart;
             }
         }
     };

@@ -137,7 +137,13 @@
              *
              * Access the Vuex action 'getParts' via the built in 'dispatch' fn - to call the API to retrieve the list of parts
              */
-            this.$store.dispatch('getParts');
+//            this.$store.dispatch('getParts');
+
+            /**
+             * Re. 6_10 Namespacing Modules
+             * Now we are namespacing our modules we need to include the modules name in any call to Actions, Mutations or Getters
+             */
+            this.$store.dispatch('robots/getParts');
         },
 
         mixins:[mountedHookMixin],
@@ -177,7 +183,13 @@
              * This computed property will get updated once the created call has made the Vuex store perform it's 'getParts' action
              */
             availableParts(){
-                return this.$store.state.parts;
+//                return this.$store.state.parts;
+                /**
+                 * Re. 6_9 Organising the Store with Modules
+                 *
+                 * Access our newly created 'robots' module
+                 */
+                return this.$store.state.robots.parts;
             },
 
 
@@ -229,7 +241,13 @@
                  *
                  * Now we use a Vuex action - instead of the above mutation
                  */
-                this.$store.dispatch('addRobotToCart', Object.assign({}, robot, {cost}))
+//                this.$store.dispatch('addRobotToCart', Object.assign({}, robot, {cost}))
+
+                /**
+                 * Re. 6_10 Namespacing Modules
+                 * Now we are namespacing our modules we need to include the modules name in any call to Actions, Mutations or Getters
+                 */
+                this.$store.dispatch('robots/addRobotToCart', Object.assign({}, robot, {cost}))
                     .then( (res) => {
                         /**
                          * Re. 6_7 Returning Promises from Actions
