@@ -18,7 +18,13 @@
                     {{robot.head.title}}
                 </td>
                 <td class="cost">
-                    {{robot.cost}}
+
+                    <!--{{robot.cost}}-->
+
+                    <!-- Re. 7_6 Creating a Custom Filter
+                    The first value to be passed into the filter is the item that precedes the pipe i.e. robot.cost
+                    We are then calling our currency filter and passing in the symbol we wish to use -->
+                    {{robot.cost | currency('$')}}
                 </td>
             </tr>
             </tbody>
@@ -42,7 +48,12 @@
                     {{robot.head.title}}
                 </td>
                 <td class="cost">
-                    {{robot.cost}}
+
+                    <!--{{robot.cost}}-->
+
+                    <!-- Re. 7_6 Creating a Custom Filter -->
+                    {{robot.cost | currency('$')}}
+
                 </td>
             </tr>
             </tbody>
@@ -51,8 +62,31 @@
 </template>
 
 <script>
+
+    /**
+     * Re. 7_6 Creating a Custom Filter
+     *
+     * This Filter is declared locally
+     *
+     *
+     * Re. 7_7 Declaring Filters Globally - we now declare this filter globally, see our main file: src/index.js
+     */
+//    import currencyFilter from '../shared/currency-filter';
+
     export default {
         name: 'Cart',
+
+        /**
+         * Re. 7_6 Creating a Custom Filter
+         *
+         * This Filter is declared locally
+         *
+         *
+         * Re. 7_7 Declaring Filters Globally - we now declare this filter globally, see our main file: src/index.js
+         */
+//        filters: {
+//            currency : currencyFilter
+//        },
 
         computed: {
 
@@ -64,7 +98,7 @@
                 /**
                  * Re. 6_9 Organising the Store with Modules
                  *
-                 * Access our newly created 'robots' module
+                 * Access our newly created 'robots' module which now contains the 'cart' property
                  */
                 return this.$store.state.robots.cart;
             },
