@@ -95,6 +95,10 @@ export default new Vuex.Store({
 
         /**
          * Re. 6_7 Using Actions to Save Data to an API
+         *
+         * (The first parameter, the {}, destructures props from the context object sent to any action)
+         *
+         * N.B. the 2nd parameter, robot, is something we pass to the action when we call it from RobotBuilder.vue
          */
         addRobotToCart({commit, state}, robot){
 
@@ -133,7 +137,7 @@ export default new Vuex.Store({
      * Getters
      * Sometimes when you access data from the store you want to perform some complex calculation logic
      * before returning the data e.g. a filter operation
-     * For this we use getters
+     * For this we use getters which work like computed properties
      */
     getters : {
 

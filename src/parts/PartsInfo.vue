@@ -31,7 +31,7 @@ import getPartsMixin from './get-parts-mixin';
 //            };
 //        },
         /**
-         * Re. Passing Params as Props
+         * Re. 5_7: Passing Params as Props
          */
         // N.B. Basic props
         // props: ['partType', 'id'],
@@ -80,6 +80,8 @@ import getPartsMixin from './get-parts-mixin';
 
                 /**
                  * Re. 6_6 Using Actions to Work with APIs...
+                 *
+                 * N.B. parts is now a computed prop from the mixin so accessed via this.parts
                  */
                 return this.parts[partType].find( part => part.id === +id);// N.B. shorthand '+' to cast id to Number
             }

@@ -60,12 +60,13 @@
    }
    export default {
        /**
-        * 1. Create a "parts" attribute that RobotBuilder can data bind to when it declares a <PartSelector :parts="[someData]"/>
+        * 1. Re. 4_3 Using Props to Share Data with Child Components
+        * Create a "parts" attribute that RobotBuilder can data bind to when it declares a <PartSelector :parts="[someData]"/>
         * "parts" then becomes available as a property of "this"
         */
        props: ['parts', 'position'],
        /**
-        * 2. Validating props
+        * 2. Re. 4_4 Validating props
         * - Use a props object where the key is the name of the expected property
         * & the value is an object declaring the expected type.
         * Failure to pass a value of the expected type will result in a console error:
@@ -115,6 +116,7 @@
        methods: {
            emitSelectedPart(){
                /**
+                * Re. 4_5 Passing Data to Parent Components with Emit
                 * 5. Every vue component has an emit fn that it can use to emit an event.
                 * Parent components can then bind to these events.
                 * Here we emit a 'partSelected' event passing along the computed property 'selectedPart' (which is a function
@@ -137,16 +139,24 @@
 //                this.emitSelectedPart();
            },
            /**
-            * Re. Navigating to routes with code
+            * Re. 5_5 Navigating to routes with code
             * Because we injected a router into our Vue instance in the main index.js file
-            * we now have a router available here on this.$router
+            * we now have a router available here on this.$router and we can use the 'push'
+            * method to navigate to a URL
             */
            showPartInfo(){
 
-               // e.g.1 - Pass in a route URL
+               /**
+                * e.g.1 - Pass in a route URL
+                */
 //                this.$router.push('/parts');
 
-               // e.g.2 - Use object syntax now we want to pass parameters
+               /**
+                * e.g.2 - Use object syntax now we want to pass parameters
+                *
+                * See also App.vue - Re. Single Page Applications with Vue.js re. 4_7 Route Query and Name
+                * for how this is done in a template
+                */
                this.$router.push({
                    name : 'Parts',
                    params : {

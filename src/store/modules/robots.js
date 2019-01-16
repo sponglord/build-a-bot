@@ -1,5 +1,22 @@
 import axios from 'axios';
 
+//axios.defaults.baseURL = 'myBaseURLThatWillBePrependedToAnyRequestsIMake';
+
+/**
+ * Re. Single Page Applications with Vue.js re. 5_7 Intercept Requests
+ *
+ * Receives the configuration of any request
+ * With interceptors you can filter requests and results in a centralised manner
+ */
+//axios.interceptors.request.use(function(config){
+//
+//    const token = window.localStorage.getItem('token');
+//    if(token){
+//        config.headers.Authorization = token;
+//    }
+//    return config;
+//});
+
 export default {
 
     /**

@@ -5,8 +5,8 @@
                 <ul>
                     <li class="nav-item">
                         <!-- <router-link to="/">-->
-                        <!-- Above works, but this is an alternative syntax with binding to one of the
-                         routes we declared in ./router/index.js -->
+                        <!-- Above works, but this is an alternative syntax with BINDING (hence the colon before 'to')
+                         to one of the routes we declared in ./router/index.js -->
                         <router-link :to="{name : 'Home'}" class="nav-link" exact>
                             <img class="logo" src="assets/build-a-bot-logo.png"/>
                             Build-a-Bot
@@ -22,6 +22,11 @@
                         <router-link :to="{name : 'Build'}" class="nav-link" exact>
                             Build
                         </router-link>
+
+                        <!-- Re. Single Page Applications with Vue.js re. 4_7 Route Query and Name
+                        When referring to a route by name, like above, it is also possible to send in params
+                        e.g. <router-link :to="{name : 'Build', params : {id : mobile} }">
+                        See also PartSelector.vue Re. 5_5 Navigating to routes with code e.g.2 for how this is done from code -->
                     </li>
 
                     <!-- Re. chap 6 - Managing State & Server Communication with Vuex -->
@@ -50,7 +55,10 @@
 
                 <!-- 2. Display the component that matches our current route
                 A router-link points to a route object (as declared in router/index.js)
-                This route object specifies which component(s) to place in which router-view(s) on the page -->
+                This route object specifies which component(s) to place in which router-view(s) on the page
+
+                Every time we load a page the router will find the current path, find the component linked to the path
+                and add its template into the router-view section -->
                 <router-view/><!-- Re. 5_9: Using Named Views - if a name attr is not specified it defaults to "default" -->
             </main>
         </div>

@@ -10,10 +10,16 @@
     <div v-if="availableParts" class="content">
 
         <div class="preview">
-            <!-- Re. Injecting content into a child component with slots
-            CollapsibleSection.vue will have a Toggleable Content area into which we can inject content -->
+            <!-- Re. 4_6 Injecting content into a child component with slots
+            CollapsibleSection.vue will have a Toggleable Content area (<slot>) into which we can inject content -->
             <CollabsibleSection>
-                <div class="preview-content">
+
+                <!-- Re. Single Page Applications with Vue.js re. 3_9 Slots
+                Having named slots - here we add slot="main" to say which area of the
+                CollapsibleSection's Toggleable Content we want to inject this div into -->
+
+                <!--<div class="preview-content">-->
+                <div slot="main" class="preview-content">
                     <div class="top-row">
                         <img :src="selectedRobot.head.src"/>
                     </div>
@@ -26,8 +32,11 @@
                         <img :src="selectedRobot.base.src"/>
                     </div>
                 </div>
+                <!-- Re. Single Page Applications with Vue.js re. 3_9 Slots
+                Inject the button into a specific slot in CollapsibleSection.vue -->
+                <button slot="button" class="add-to-cart" @click="addToCart()">Add to Cart</button>
             </CollabsibleSection>
-            <button class="add-to-cart" @click="addToCart()">Add to Cart</button>
+            <!--<button class="add-to-cart" @click="addToCart()">Add to Cart</button>-->
         </div>
 
         <div class="top-row">
@@ -36,12 +45,16 @@
                 <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
             </div>-->
 
-            <!-- A. Tell our PartSelector which parts to use
+            <!--
+            Re. 4_3 Using Props to Share Data with Child Components
+            A. Tell our PartSelector which parts to use
              We bind to a "parts" attribute of the PartSelector: see PartSelector's "props" property where we declare this -->
             <PartSelector
                 :parts="availableParts.heads"
                 position="top"
                 @partSelected="part => selectedRobot.head=part"/>
+                <!-- Re. 4_5 Passing Data to Parent Components with Emit
+                 We listen to the 'partSelected' emitted from PartSelector with this.$emit('partSelected', this.selectedPart) -->
         </div>
         <div class="middle-row">
 
@@ -234,6 +247,11 @@
              * This creates methods on our component called getParts & addRobotToCart
              */
             ...mapActions('robots', ['getParts', 'addRobotToCart']),
+            /**
+             * This syntax will also work and would allow us to map the actions to functions of a
+             * different name in this component
+             */
+//            ...mapActions('robots', {getPartsFn : 'getParts', addRobotToCartFn : 'addRobotToCart'}),
 
             /**
              * Re. 6_16 Using the Vuex MapMutations Helper
@@ -319,6 +337,28 @@
                     });
 
                 this.addedToCart = true;// Re. 5_12: Preventing Navigation Away from Pages...
+            }
+        },
+        /**
+         * Re. Single Page Applications with Vue.js re. 5_7 Intercept Requests
+         *
+         * The watch property of a Vue app contains functions, whose names correspond to
+         * data or computed properties, that will run every time one of these properties change.
+         *
+         * (This probably doesn't add much value to computed properties which are themselves functions
+         * and so can run any necessary code - but for data properties it is a way to perform
+         * some extra actions as the prop changes)
+         */
+        watch:{
+            availableParts(val){
+                if(window.console && window.console.log){
+                    window.console.log('### RobotBuilder::availableParts:: val=',val);
+                }
+            },
+            addedToCart(val){
+                if(window.console && window.console.log){
+                    window.console.log('### RobotBuilder::addedToCart:: val=',val);
+                }
             }
         }
     }

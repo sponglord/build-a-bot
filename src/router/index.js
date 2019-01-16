@@ -10,6 +10,23 @@ import HomePage from '../home/HomePage.vue';
 import RobotBuilder from '../build/RobotBuilder.vue';
 import PartInfo from '../parts/PartsInfo.vue';
 
+/**
+ * Single Page Applications with Vue.js re. 4_9 Lazy Loading
+ *
+ * Define our components as async components to only load them when the page is visited
+ *
+ * This means that when Webpack builds the file it will create separate chunks for components
+ * defined this way - in this example a 0.js file will be created which will be the PartInfo component file.
+ * Vue.js will request this file, on the fly, when the corresponding route is loaded
+ *
+ * NOTE: System.import() is to be deprecated - use import() instead, see: https://webpack.js.org/guides/code-splitting/
+ *
+ * AND, doing the below may need some tweaks to webpack config since currently Vue/Webpack-dev-server tries to
+ * serve 0.js from localhost:8050/0.js (it should be localhost:8050/build/0.js)
+ */
+//const PartInfo = () => System.import('../parts/PartsInfo.vue');
+
+
 //Re. 5_8: Using Nested Routes
 import BrowseParts from '../parts/BrowseParts.vue';
 import RobotHeads from '../parts/RobotHeads.vue';
@@ -39,7 +56,7 @@ export default new Router({
      *
      * Setting this mode removes the # signs from the URL
      * However this has one consequence - the URLS that are now generated are only understood when run locally because
-     * Vue/Webpack Dev Server know how to serves these URLs e.g. localhost:8050/parts/heads/1.
+     * Vue/Webpack Dev Server knows how to serves these URLs e.g. localhost:8050/parts/heads/1.
      *
      * A server will not understand them.
      *
@@ -143,6 +160,8 @@ export default new Router({
          * Advanced route - so we can pass extra information in the URL
          * e.g. for a parts route: which parts section and which actual part.
          * To do this you use a colon followed by a variable name - which allows a route url like '/parts/heads/3'
+         *
+         * N.B. This route is navigated to from PartSelector.vue
          */
         {
             path : '/parts/:partType/:id',// we can use these 2 vars to look up a part from our parts list
@@ -187,6 +206,80 @@ export default new Router({
             path : '/cart',
             name : 'Cart',
             component : ShoppingCart
-        }
+        },
+
+        /**
+         * Re. Single Page Applications with Vue.js re. 4_8 Wildcard routes
+         *
+         * To include a 404 route for all the URLS we are not aware of
+         */
+//        {
+//            path : '*',
+//            component: PageNotFoundComponent
+//        }
+
+        /**
+         * Re. Single Page Applications with Vue.js re. 4_4 Router-link - Scroll Behaviour
+         *
+         * You can add a redirect parameter to a route to redirect one page to another
+         * e.g. {path : '/cart',  name : 'Cart', redirect: '/'}
+         *
+         * Using this instead of the other '/cart' route would mean that every attempt to
+         * navigate to the '/cart' url would end up at the Home page
+         *
+         * A more realistic use case would be that when a user navigates to the root link ('/')
+         * you redirect them to another page: {path:'/', redirect: '/build}
+         */
+
     ],
+
+    /**
+     * Re. Single Page Applications with Vue.js re. 4_7 Route Query and Name
+     *
+     * To extract GET params from the URL use
+     * this.$route.query.page (where page is the var appended to the URL with ? or &)
+     *
+     * NOTE: to use these you will have to remove the 'exact' attr from <router-link> tags
+     * so that those links will still work even when the URL has query parameters
+     */
+
+    /**
+     * Re. Single Page Applications with Vue.js re. 4_4 Router-link - Scroll Behaviour
+     *
+     * By default Vue sets a class on the active router link: 'router-link-exact-active'
+     * Use the property below to change what class is set on active router links
+     *
+     * See also: comment in App.vue under "Re. Styling links based on the active route" which offers an
+     * alternative way to do this and talks about the 'exact' attr
+     */
+//    linkActiveClass: 'is-active',
+
+    /**
+     * Re. Single Page Applications with Vue.js re. 4_4 Router-link - Scroll Behaviour
+     *
+     * scrollBehavior is a method that accepts the path we navigate to, the path we navigate from
+     * and the scroll position that the page was in.
+     *
+     * You can pass in an object that means that every time a new path is loaded the page scrolls to the top
+     */
+//    scrollBehavior: (to, from, savedPosition) => ({y: 0})
+    /**
+     * You can also scroll to the last position saved
+      */
+//    scrollbarBehaviour(to, from, savedPosition){
+//        if(savedPosition){
+//            return savedPosition;
+//        }
+//    }
+    /**
+     * Or, if the link has a hash parameter you can return with the hash selector
+     * to scroll to the element with the id of the hash value
+     */
+//    scrollbarBehaviour(to, from, savedPosition){
+//        if(to.hash){
+//            return {
+//                selector: to.hash
+//            }
+//        }
+//    }
 });
